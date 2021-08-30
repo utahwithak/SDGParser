@@ -12,14 +12,14 @@ public struct Parser {
     }
 
     
-    static func parse(game at: URL) async throws  -> Game {
+    public static func parse(game at: URL) async throws  -> Game {
         guard let inputStream = InputStream(url: at) else {
             throw ParseError.failedToOpenStream
         }
         return try await parse(game: inputStream)
     }
     
-    static func parse(game from: String) async throws  -> Game {
+    public static func parse(game from: String) async throws  -> Game {
         guard let data = from.data(using: .utf8) else {
             throw ParseError.failedToCreateStreamData
         }
@@ -28,7 +28,7 @@ public struct Parser {
         return try await parse(game: stream)
     }
     
-    static func parse(game stream: InputStream) async throws -> Game {
+    public static func parse(game stream: InputStream) async throws -> Game {
         stream.open()
         defer {
             stream.close()
@@ -44,7 +44,7 @@ public struct Parser {
         return Game(accessor: document)
     }
     
-    static func serialize(game: Game) throws -> String {
+    public static func serialize(game: Game) throws -> String {
         let document = try XML.Converter(game.accessor).makeDocument()
         return document
         

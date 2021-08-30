@@ -8,14 +8,14 @@
 import Foundation
 import SwiftyXMLParser
 
-class Player {
+public class Player {
     
     let accessor: XML.Accessor
     init(root: XML.Accessor) {
         self.accessor = root
     }
 
-    var name: String {
+    public var name: String {
         get {
             return accessor["name"].text ?? ""
         }
@@ -30,7 +30,7 @@ class Player {
         }
     }
     
-    var farmName: String {
+    public var farmName: String {
         get {
             return accessor["farmName"].text ?? ""
         }
@@ -45,7 +45,7 @@ class Player {
         }
     }
     
-    var money: Int {
+    public var money: Int {
         get {
             return accessor["money"].int ?? 0
         }

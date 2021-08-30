@@ -8,11 +8,11 @@
 import Foundation
 import SwiftyXMLParser
 
-class Game {
+public class Game {
     
     internal let accessor: XML.Accessor
     
-    let player: Player
+    public let player: Player
     
     internal init(accessor: XML.Accessor) {
         self.accessor = accessor
