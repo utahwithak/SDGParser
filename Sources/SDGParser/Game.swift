@@ -24,6 +24,64 @@ public class Game {
         accessor["SaveGame","gameVersion"].text ?? "<unknown>"
     }
 
+    public var chanceToRainTomorrow: Double {
+        get {
+            accessor["SaveGame","chanceToRainTomorrow"].double ?? 0
+        }
+        set {
+            switch accessor["SaveGame","chanceToRainTomorrow"] {
+            case .singleElement(let element):
+                element.text = "\(newValue)"
+            default:
+                return
+            }
+        }
+    }
+
+    public var currentSeason: Season {
+        get {
+            let text = accessor["SaveGame","currentSeason"].text ?? ""
+            return Season(rawValue: text) ?? .spring
+
+        }
+        set {
+            switch accessor["SaveGame","currentSeason"] {
+            case .singleElement(let element):
+                element.text = newValue.rawValue
+            default:
+                return
+            }
+        }
+    }
+
+    public var currentYear: Int {
+        get {
+            accessor["SaveGame","year"].int ?? 1
+        }
+        set {
+            switch accessor["SaveGame","year"] {
+            case .singleElement(let element):
+                element.text = "\(max(newValue, 1))"
+            default:
+                return
+            }
+        }
+    }
+
+    public var dayOfMonth: Int {
+        get {
+            accessor["SaveGame","dayOfMonth"].int ?? 1
+        }
+        set {
+            switch accessor["SaveGame","dayOfMonth"] {
+            case .singleElement(let element):
+                let dayValue = max(min(28, newValue), 1)
+                element.text = "\(dayValue)"
+            default:
+                return
+            }
+        }
+    }
 
     public func makeDocument() throws -> String {
         try XML.Converter(accessor).makeDocument()
