@@ -40,7 +40,6 @@ public struct Parser {
         
         let document = XML.parse(stream)
         
-        
         return Game(accessor: document)
     }
     

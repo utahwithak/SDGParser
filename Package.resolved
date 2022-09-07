@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SwiftyXMLParser",
+        "repositoryURL": "https://github.com/utahwithak/SwiftyXMLParser.git",
+        "state": {
+          "branch": "stream-support",
+          "revision": "b8c49dc4c470ca72dc2023757fb8d9df443c3338",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

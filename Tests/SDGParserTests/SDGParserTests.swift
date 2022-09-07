@@ -137,7 +137,37 @@ final class SDGParserTests: XCTestCase {
             XCTFail("Failed to serialize xml")
         }
     }
-    
+
+    func testAmpersands() async throws {
+        guard let testURL = url(for: "ampersand"), let stream = InputStream(url: testURL) else {
+            XCTFail("Failed to find file")
+            return
+        }
+
+        let accessor = XML.parse(stream)
+        print("Text:\(accessor.text)")
+        let document = try XML.Converter(accessor).makeDocument()
+        let file = try String(contentsOf: testURL)
+        print("File:\"\(file)\"")
+        XCTAssertEqual(file.trimmingCharacters(in: .whitespacesAndNewlines), document.trimmingCharacters(in: .whitespacesAndNewlines))
+
+    }
+
+    func testPopsSerialization() async throws {
+        guard let gameURL = url(for: "Pops") else {
+            XCTFail("Failed to find game")
+            return
+        }
+
+        let game = try await Parser.parse(game: gameURL)
+        do {
+            let serializedValue = try Parser.serialize(game: game)
+            let secondGame = try await Parser.parse(game: serializedValue)
+            XCTAssert(areGamesEqual(game1: game, game2: secondGame))
+        } catch {
+            XCTFail("Failed to serialize xml")
+        }
+    }
     
     func areGamesEqual(game1: Game, game2: Game) -> Bool {
     
