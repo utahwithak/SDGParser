@@ -18,7 +18,14 @@ public class Game {
         self.accessor = accessor
         player = Player(root: accessor["SaveGame","player"])
     }
-    
-    
-    
+
+
+    public var gameVersion: String {
+        accessor["SaveGame","gameVersion"].text ?? "<unknown>"
+    }
+
+
+    public func makeDocument() throws -> String {
+        try XML.Converter(accessor).makeDocument()
+    }
 }

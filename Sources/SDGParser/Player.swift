@@ -20,7 +20,6 @@ public class Player {
             return accessor["name"].text ?? ""
         }
         set {
-            
             switch accessor["name"] {
             case .singleElement(let element):
                 element.text = newValue
