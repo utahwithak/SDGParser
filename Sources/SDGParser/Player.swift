@@ -8,52 +8,34 @@
 import Foundation
 import SwiftyXMLParser
 
-public class Player {
-    
-    let accessor: XML.Accessor
-    init(root: XML.Accessor) {
-        self.accessor = root
-    }
+public class Player: XMLObject {
 
     public var name: String {
         get {
-            return accessor["name"].text ?? ""
+            text(for: "name")
         }
         set {
-            switch accessor["name"] {
-            case .singleElement(let element):
-                element.text = newValue
-            default:
-                print("FAILED TO SET NAME!")
-            }
+            set(newValue, for: "name")
         }
     }
     
     public var farmName: String {
         get {
-            return accessor["farmName"].text ?? ""
+            text(for: "farmName")
         }
         set {
-            
-            switch accessor["farmName"] {
-            case .singleElement(let element):
-                element.text = newValue
-            default:
-                print("FAILED TO SET Farm NAME!")
-            }
+            set(newValue, for: "farmName")
         }
     }
     
     public var money: Int {
         get {
-            return accessor["money"].int ?? 0
+            int(for: "money")
         }
         set {
-            switch accessor["money"] {
-            case .singleElement(let element):
-                element.text = "\(newValue)"
-            default:
-                print("FAILED TO SET money!")
+            set(newValue, for: "money") {
+                let max = Int(Int32.max)
+                return min($0, max)
             }
         }
     }

@@ -8,33 +8,27 @@
 import Foundation
 import SwiftyXMLParser
 
-public class Game {
-    
-    internal let accessor: XML.Accessor
-    
+public class Game: XMLObject {
+
     public let player: Player
     
-    internal init(accessor: XML.Accessor) {
-        self.accessor = accessor
-        player = Player(root: accessor["SaveGame","player"])
+    init(accessor: XML.Accessor) {
+        player = Player(accessor: accessor["SaveGame","player"])
+
+        super.init(accessor: accessor, offsetKeys: ["SaveGame"])
     }
 
 
     public var gameVersion: String {
-        accessor["SaveGame","gameVersion"].text ?? "<unknown>"
+        text(for: "gameVersion", defaultValue: "<unknown>")
     }
 
     public var chanceToRainTomorrow: Double {
         get {
-            accessor["SaveGame","chanceToRainTomorrow"].double ?? 0
+            double(for: "chanceToRainTomorrow", defaultValue: 0.183)
         }
         set {
-            switch accessor["SaveGame","chanceToRainTomorrow"] {
-            case .singleElement(let element):
-                element.text = "\(newValue)"
-            default:
-                return
-            }
+            set(newValue, for: "chanceToRainTomorrow")
         }
     }
 
@@ -54,32 +48,121 @@ public class Game {
         }
     }
 
-    public var currentYear: Int {
+    public var farmType: FarmType {
         get {
-            accessor["SaveGame","year"].int ?? 1
+            let intVal = accessor["SaveGame","whichFarm"].int ?? 0
+            return FarmType(rawValue: intVal) ?? .standard
+
         }
         set {
-            switch accessor["SaveGame","year"] {
+            switch accessor["SaveGame","whichFarm"] {
             case .singleElement(let element):
-                element.text = "\(max(newValue, 1))"
+                element.text = "\(newValue.rawValue)"
             default:
                 return
             }
         }
     }
 
-    public var dayOfMonth: Int {
+    public var currentYear: Int {
         get {
-            accessor["SaveGame","dayOfMonth"].int ?? 1
+            int(for: "year", defaultValue: 1)
+
         }
         set {
-            switch accessor["SaveGame","dayOfMonth"] {
-            case .singleElement(let element):
-                let dayValue = max(min(28, newValue), 1)
-                element.text = "\(dayValue)"
-            default:
-                return
+            set(newValue, for: "year") {
+                max(1, $0)
             }
+        }
+    }
+
+    public var dayOfMonth: Int {
+        get {
+            int(for: "dayOfMonth", defaultValue: 1)
+        }
+        set {
+            set(newValue, for: "dayOfMonth") {
+                max(min(28, $0), 1)
+            }
+        }
+    }
+
+    public var samBandName: String {
+        get {
+            text(for: "samBandName")
+        }
+        set {
+            set(newValue, for: "samBandName")
+        }
+    }
+
+    public var elliottBookName: String {
+        get {
+            text(for: "elliottBookName")
+        }
+        set {
+            set(newValue, for: "elliottBookName")
+        }
+    }
+
+    public var dailyLuck: Double {
+        get {
+            double(for: "dailyLuck")
+        }
+        set {
+            set(newValue, for: "dailyLuck")
+        }
+    }
+
+    public var isRaining: Bool {
+        get {
+            bool(for: "isRaining")
+        }
+        set {
+            set(newValue, for: "isRaining")
+        }
+    }
+
+    public var shippingTax: Bool {
+        get {
+            bool(for: "shippingTax")
+        }
+        set {
+            set(newValue, for: "shippingTax")
+        }
+    }
+
+    public var bloomDay: Bool {
+        get {
+            bool(for: "bloomDay")
+        }
+        set {
+            set(newValue, for: "bloomDay")
+        }
+    }
+    public var isLightning: Bool {
+        get {
+            bool(for: "isLightning")
+        }
+        set {
+            set(newValue, for: "isLightning")
+        }
+    }
+    public var isSnowing: Bool {
+        get {
+            bool(for: "isSnowing")
+        }
+        set {
+            set(newValue, for: "isSnowing")
+        }
+    }
+
+    public var shouldSpawnMonsters: Bool {
+        get {
+            bool(for: "shouldSpawnMonsters")
+        }
+        set {
+            set(newValue, for: "shouldSpawnMonsters")
         }
     }
 
@@ -87,3 +170,4 @@ public class Game {
         try XML.Converter(accessor).makeDocument()
     }
 }
+
