@@ -14,12 +14,15 @@ public class Player: XMLObject {
 
     public let experiencePoints: ExperiencePoints
 
+    public let inventory: Inventory
+
     init(accessor: XML.Accessor) {
         friendshipData = FriendshipData(accessor: accessor["friendshipData"])
         experiencePoints = ExperiencePoints(accessor: accessor["experiencePoints"])
+        inventory = Inventory(accessor: accessor["items"])
         super.init(accessor: accessor)
 
-        print("Friends:\(friendshipData.friendshipItems.map { $0.points })")
+
     }
 
     public var name: String {
