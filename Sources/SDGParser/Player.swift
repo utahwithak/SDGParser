@@ -21,8 +21,6 @@ public class Player: XMLObject {
         experiencePoints = ExperiencePoints(accessor: accessor["experiencePoints"])
         inventory = Inventory(accessor: accessor["items"])
         super.init(accessor: accessor)
-
-
     }
 
     public var name: String {
