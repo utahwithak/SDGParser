@@ -39,7 +39,9 @@ public struct Parser {
         }
         
         let document = XML.parse(stream)
-        
+        if let error = document.error {
+            throw error
+        }
         return Game(accessor: document)
     }
     

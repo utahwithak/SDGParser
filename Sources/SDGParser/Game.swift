@@ -13,6 +13,7 @@ public class Game: XMLObject {
     public let player: Player
     
     init(accessor: XML.Accessor) {
+        
         player = Player(accessor: accessor["SaveGame","player"])
 
         super.init(accessor: accessor, offsetKeys: ["SaveGame"])
