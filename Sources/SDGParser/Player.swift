@@ -165,6 +165,11 @@ public class Player: XMLObject {
         set { set(newValue, for: "critPowerModifier") }
     }
 
+    public var clubCoins: Int {
+        get { int(for: "clubCoins") }
+        set { set(newValue, for: "clubCoins") }
+    }
+
     public var trashCanLevel: Int {
         get { int(for: "trashCanLevel") }
         set {
@@ -186,10 +191,7 @@ public class Player: XMLObject {
 
     public var daysUntilHouseUpgrade: Int {
         get { int(for: "daysUntilHouseUpgrade") }
-        set {
-            set(newValue, for: "daysUntilHouseUpgrade")
-
-        }
+        set { set(newValue, for: "daysUntilHouseUpgrade") }
     }
 
     public var daysLeftForToolUpgrade: Int {
