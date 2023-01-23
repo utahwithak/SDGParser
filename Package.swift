@@ -14,7 +14,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(name:"SwiftyXMLParser", url: "https://github.com/utahwithak/SwiftyXMLParser.git", .branch("stream-support"))
+        .package(name:"SwiftyXMLParser", url: "https://github.com/utahwithak/SwiftyXMLParser.git", .revision("b8c49dc4c470ca72dc2023757fb8d9df443c3338"))
         
     ],
     targets: [

@@ -16,10 +16,14 @@ public class Player: XMLObject {
 
     public let inventory: Inventory
 
+    public let mailForTomorrow: StringArray
+
     init(accessor: XML.Accessor) {
         friendshipData = FriendshipData(accessor: accessor["friendshipData"])
         experiencePoints = ExperiencePoints(accessor: accessor["experiencePoints"])
         inventory = Inventory(accessor: accessor["items"])
+        mailForTomorrow = StringArray(element: accessor["mailForTomorrow"].element ?? XML.Element(name: "mailForTomorrow"))
+
         super.init(accessor: accessor)
     }
 
@@ -99,6 +103,12 @@ public class Player: XMLObject {
 
         }
     }
+
+    public var qiGems: Int {
+        get { int(for: "qiGems") }
+        set { set(newValue, for: "qiGems") }
+    }
+
     public var maxStamina: Int {
         get { int(for: "maxStamina") }
         set {

@@ -11,17 +11,28 @@ import SwiftyXMLParser
 public class Game: XMLObject {
 
     public let player: Player
-    
-    init(accessor: XML.Accessor) {
-        
-        player = Player(accessor: accessor["SaveGame","player"])
 
+    public let locations: Locations
+
+    public let bundleData: BundleData
+
+    init(accessor: XML.Accessor) {
+        player = Player(accessor: accessor["SaveGame","player"])
+        locations = Locations(accessor: accessor["SaveGame","locations"])
+        bundleData = BundleData(accessor: accessor["SaveGame", "bundleData"])
         super.init(accessor: accessor, offsetKeys: ["SaveGame"])
     }
 
 
     public var gameVersion: String {
         text(for: "gameVersion", defaultValue: "<unknown>")
+    }
+
+    public var is156OrGreater: Bool {
+        guard let version = SemanticVersionNumber(version: gameVersion) else {
+            return false
+        }
+        return version >= SemanticVersionNumber(major: 1, minor: 5, patch: 6)
     }
 
     public var chanceToRainTomorrow: Double {
@@ -76,6 +87,92 @@ public class Game: XMLObject {
             }
         }
     }
+
+    public var lostBooksFound: Int {
+        get {
+            int(for: "lostBooksFound", defaultValue: 0)
+
+        }
+        set {
+            set(newValue, for: "lostBooksFound")
+        }
+    }
+
+    public var goldenWalnuts: Int {
+        get {
+            int(for: "goldenWalnuts", defaultValue: 0)
+
+        }
+        set {
+            set(newValue, for: "goldenWalnuts")
+        }
+    }
+    var goldenWalnutsFound: Int {
+        get {
+            int(for: "goldenWalnutsFound", defaultValue: 0)
+
+        }
+        set {
+            set(newValue, for: "goldenWalnutsFound")
+        }
+    }
+
+    public var miniShippingBinsObtained: Int {
+        get {
+            int(for: "miniShippingBinsObtained", defaultValue: 0)
+
+        }
+        set {
+            set(newValue, for: "miniShippingBinsObtained")
+        }
+    }
+    public var mineShrineActivated: Bool {
+        get {
+            bool(for: "mineShrineActivated", defaultValue: false)
+
+        }
+        set {
+            set(newValue, for: "mineShrineActivated")
+        }
+    }
+    public var goldenCoconutCracked: Bool {
+        get {
+            bool(for: "goldenCoconutCracked", defaultValue: false)
+
+        }
+        set {
+            set(newValue, for: "goldenCoconutCracked")
+        }
+    }
+    public var parrotPlatformsUnlocked: Bool {
+        get {
+            bool(for: "parrotPlatformsUnlocked", defaultValue: false)
+
+        }
+        set {
+            set(newValue, for: "parrotPlatformsUnlocked")
+        }
+    }
+    public var farmPerfect: Bool {
+        get {
+            bool(for: "farmPerfect", defaultValue: false)
+
+        }
+        set {
+            set(newValue, for: "farmPerfect")
+        }
+    }
+
+    public var visitsUntilY1Guarantee: Int {
+        get {
+            int(for: "visitsUntilY1Guarantee", defaultValue: -1)
+
+        }
+        set {
+            set(newValue, for: "visitsUntilY1Guarantee")
+        }
+    }
+
 
     public var dayOfMonth: Int {
         get {
@@ -170,5 +267,27 @@ public class Game: XMLObject {
     public func makeDocument() throws -> String {
         try XML.Converter(accessor).makeDocument()
     }
+
+    public func location(for type: GameLocation.LocationType) -> GameLocation? {
+        locations.items.first(where: { $0.type == type })
+    }
+
+    public var communityCenter: CommunityCenter? {
+        location(for: .communityCenter) as? CommunityCenter
+    }
 }
 
+
+/*
+
+ <activeDialogueEvents>
+    <item>
+        <key>
+            <string>cc_Greenhouse</string>
+        </key>
+        <value>
+            <int>3</int>
+        </value>
+    </item>
+ </activeDialogueEvents>
+ */
