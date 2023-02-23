@@ -27,4 +27,8 @@ public enum ItemType: String, Identifiable, Hashable, Equatable, CaseIterable {
             return rawValue
         }
     }
+
+    public static var sortedValues: [ItemType] {
+        allCases.sorted(by: \.rawValue)
+    }
 }
