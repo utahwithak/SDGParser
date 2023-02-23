@@ -10,7 +10,6 @@ import SwiftyXMLParser
 
 public class FriendshipItem: XMLObject {
 
-
     init(element: XML.Element) {
         super.init(accessor: XML.Accessor(element))
     }

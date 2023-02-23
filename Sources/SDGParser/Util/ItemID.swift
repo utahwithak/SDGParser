@@ -5,7 +5,11 @@
 
 import Foundation
 
-public enum ItemID: Int {
+public enum ItemID: Int, CaseIterable, Identifiable {
+    public var id: Int {
+        rawValue
+    }
+
     case unknown = -1
     case weeds = 0
     case stone1 = 2

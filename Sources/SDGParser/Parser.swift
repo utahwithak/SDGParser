@@ -1,8 +1,6 @@
 import Foundation
-import SwiftyXMLParser
+@preconcurrency import SwiftyXMLParser
 
-@available(iOS 15.0.0, *)
-@available(macOS 12.0.0, *)
 public struct Parser {
     
     public enum ParseError: Error {
@@ -42,7 +40,7 @@ public struct Parser {
         if let error = document.error {
             throw error
         }
-        return Game(accessor: document)
+        return await Game(accessor: document)
     }
     
     public static func serialize(game: Game) throws -> String {

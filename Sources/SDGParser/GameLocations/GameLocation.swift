@@ -6,7 +6,7 @@
 import Foundation
 import SwiftyXMLParser
 
-open class GameLocation: XMLObject {
+public class GameLocation: XMLObject {
     public enum LocationType: String {
         case unknown
         case farm = "Farm"

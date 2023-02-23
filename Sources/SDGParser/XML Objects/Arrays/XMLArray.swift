@@ -6,7 +6,7 @@
 import Foundation
 import SwiftyXMLParser
 
-open class XMLArray<T>: XMLObject {
+public class XMLArray<T>: XMLObject {
 
     let element: XML.Element
 

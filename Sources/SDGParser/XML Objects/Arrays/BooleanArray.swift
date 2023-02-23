@@ -6,7 +6,7 @@
 import Foundation
 import SwiftyXMLParser
 
-public class f: XMLArray<Bool> {
+public class BooleanArray: XMLArray<Bool> {
     init(element: XML.Element) {
         super.init(element: element, childElementName: "boolean") { element in
             XML.Accessor(element).bool ?? false

@@ -8,7 +8,8 @@
 import Foundation
 import SwiftyXMLParser
 
-open class XMLObject {
+@MainActor
+public class XMLObject {
     let accessor: XML.Accessor
 
     let baseKeys: [String]
