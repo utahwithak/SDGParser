@@ -18,12 +18,19 @@ public class Player: XMLObject {
 
     public let mailForTomorrow: StringArray
 
+    public let mailReceived: StringArray
+
+    public let eventsSeen: IntArray
+
     init(accessor: XML.Accessor) {
         friendshipData = FriendshipData(accessor: accessor["friendshipData"])
         experiencePoints = ExperiencePoints(accessor: accessor["experiencePoints"])
         inventory = Inventory(accessor: accessor["items"])
         mailForTomorrow = StringArray(element: accessor["mailForTomorrow"].element ?? XML.Element(name: "mailForTomorrow"))
 
+        mailReceived = StringArray(element: accessor["mailReceived"].element ?? XML.Element(name: "mailReceived"))
+
+        eventsSeen = IntArray(element: accessor["eventsSeen"].element ?? XML.Element(name: "eventsSeen"))
         super.init(accessor: accessor)
     }
 

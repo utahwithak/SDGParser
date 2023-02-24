@@ -60,4 +60,11 @@ public class XMLArray<T>: XMLObject {
         modifier(newElement, newValue)
         element.childElements.append(newElement)
     }
+
+
+}
+extension XMLArray where T: Equatable {
+    public func contains(_ value: T) -> Bool {
+        values.contains(where: { value == $0 })
+    }
 }
